@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: treatment-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: treatmentdb
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: .
+    container_name: treatment-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/treatmentdb
+      PORT: ${PORT:-5000}
+    depends_on:
+      - mongodb
+
+volumes:
+  mongo_data:

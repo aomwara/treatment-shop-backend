@@ -24,5 +24,17 @@ services:
     depends_on:
       - mongodb
 
+  seed:
+    build: .
+    container_name: treatment-seed
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/treatmentdb
+    depends_on:
+      - mongodb
+    command: node dist/scripts/seed.js
+    restart: "no"
+    profiles:
+      - seed
+
 volumes:
   mongo_data:

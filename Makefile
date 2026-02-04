@@ -12,3 +12,6 @@ run-backend-container:
 
 stop-backend-container:
 	docker compose -f docker-compose.yaml down
+
+seed-data:
+	docker compose --profile seed up seed
